@@ -230,13 +230,9 @@ php -r "unlink('composer-setup.php');"
 sudo mv composer.phar /usr/local/bin/composer
 
 # INSTALAR DOTNET
-wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
-    sudo dpkg -i packages-microsoft-prod.deb
-    sudo apt-get update
-    sudo apt-get install -y apt-transport-https
-    sudo apt-get update
-    sudo apt-get install -y dotnet-sdk-5.0
-    rm packages-microsoft-prod.deb
+sudo apt-get install $forced_flag dotnet-sdk-7.0 &&
+sudo apt-get install $forced_flag aspnetcore-runtime-7.0
+
 
 for usuario in $lista_usuarios_ordenada
 do
