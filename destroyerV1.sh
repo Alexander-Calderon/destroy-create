@@ -210,7 +210,7 @@ for usuario in $lista_usuarios_ordenada
 do
   sudo su $usuario -c "wget -O- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh" | bash &&
   sudo su $usuario -c "wget -O- https://raw.githubusercontent.com/nvm-sh/nvm/v0.35.3/install.sh | bash" &&
-  sudo su $usuario -c "cd && source ~/.bashrc" 
+  sudo su $usuario -c "cd ~/Downloads && source ~/.bashrc" 
 done  &&
 
 #este puede que sobre...
@@ -263,15 +263,15 @@ sudo a2dismod mpm_event &&
 sudo a2enmod mpm_prefork &&
 sudo a2enmod php8.1 &&
 sudo systemctl restart apache2 &&
-cd &&
+cd ~/Downloads &&
 sudo apt install mysql-server $forced_flag &&
 sudo touch script.sql &&
 sudo echo -e "CREATE USER 'campus'@'%' IDENTIFIED WITH mysql_native_password BY 'campus2023'; GRANT ALL PRIVILEGES ON *.* TO 'campus'@'%';" | sudo tee script.sql &&
 sudo mysql < script.sql &&
 sudo rm script.sql &&
-cd &&
+cd ~/Downloads &&
 
-cd Downloads &&
+cd ~/Downloads &&
 sudo cp -rp firefox-112.0b9.tar.bz2 /opt/ &&
 cd /opt/ &&
 sudo tar xjf firefox-112.0b9.tar.bz2 &&
@@ -280,6 +280,6 @@ sudo chown -R $USER /opt/firefox/ &&
 sudo touch ~/.local/share/applications/firefox_dev.desktop &&
 sudo echo -e "[Desktop Entry]\nName=Firefox Developer\nGenericName=Firefox Developer Edition\nExec=/opt/firefox/firefox %u\nTerminal=false\nIcon=/opt/firefox/browser/chrome/icons/default/default128.png\nType=Application\nCategories=Application;Network;X-Developer;\nComment=Firefox Developer Edition Web Browser.\nStartupWMClass=Firefox Developer Edition" | sudo tee ~/.local/share/applications/firefox_dev.desktop &&
 sudo chmod +x ~/.local/share/applications/firefox_dev.desktop &&
-cd &&
+cd ~/Downloads &&
 
 sudo apt update && sudo apt upgrade $forced_flag
