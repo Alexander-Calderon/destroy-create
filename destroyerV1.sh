@@ -23,7 +23,7 @@ if [ "$aplicar_uninstaller" = "s" ]; then
 	sudo apt remove --purge git gitk $forced_flag
 	sudo apt remove --purge nodejs npm $forced_flag
 	sudo apt remove --purge apache2 $forced_flag
-	sudo apt remove --purge php libapache2-mod-php php-mysql $forced_flag
+	sudo apt remove --purge php libapache2-mod-php php-mysql php-mbstring php-zip php-gd php-json php-curl phpmyadmin $forced_flag
 	sudo apt remove --purge mysql-server $forced_flag
 	sudo apt remove --purge mongodb-compass $forced_flag
 
@@ -255,7 +255,7 @@ sudo echo -e "
       \nCustomLog \${APACHE_LOG_DIR}/access.log combined
     </VirtualHost>
     " | sudo tee /etc/apache2/sites-available/your_domain.conf &&
-sudo a2ensite your_domain.conf &&
+sudo a2ensite your_domain.conf && #SOSPECHOSO NO CONFIGURADO
 sudo a2dissite 000-default.conf &&
 sudo apache2ctl configtest &&
 sudo systemctl restart apache2 &&
@@ -269,7 +269,22 @@ sudo touch script.sql &&
 sudo echo -e "CREATE USER 'campus'@'%' IDENTIFIED WITH mysql_native_password BY 'campus2023'; GRANT ALL PRIVILEGES ON *.* TO 'campus'@'%';" | sudo tee script.sql &&
 sudo mysql < script.sql &&
 sudo rm script.sql &&
-cd ~/Downloads &&
+
+# Verificar si el módulo mod_rewrite ya está habilitado
+if apache2ctl -M | grep -q 'rewrite_module'; then
+    echo "El módulo mod_rewrite ya está habilitado."
+else
+    # Habilitar el módulo mod_rewrite
+    sudo a2enmod rewrite
+
+    # Cambiar la configuración AllowOverride en apache2.conf
+    sudo sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+    # Reiniciar Apache2
+    sudo service apache2 restart
+
+    echo "El módulo mod_rewrite ha sido habilitado correctamente."
+fi
 
 cd ~/Downloads &&
 sudo cp -rp firefox-112.0b9.tar.bz2 /opt/ &&
@@ -282,4 +297,4 @@ sudo echo -e "[Desktop Entry]\nName=Firefox Developer\nGenericName=Firefox Devel
 sudo chmod +x ~/.local/share/applications/firefox_dev.desktop &&
 cd ~/Downloads &&
 
-sudo apt update && sudo apt upgrade $forced_flag
+sudo apt update && sudo apt upgrade $forced_flag && history -c
