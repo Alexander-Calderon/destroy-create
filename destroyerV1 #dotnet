@@ -133,12 +133,12 @@ for i in "${!users[@]}"; do
   sudo chsh -s /bin/bash $USER
 done
 
-sudo apt update && sudo apt upgrade -y
+sudo apt update && sudo apt upgrade $forced_flag
 
 cd Downloads
 
-sudo apt-get install curl htop python3-pip git nodejs npm -y
-sudo add-apt-repository ppa:obsproject/obs-studio -y
+sudo apt-get install curl htop python3-pip git nodejs npm $forced_flag
+sudo add-apt-repository ppa:obsproject/obs-studio $forced_flag
 sudo apt update
 sudo apt install obs-studio $forced_flag
 
@@ -147,7 +147,7 @@ sudo wget -cO - 'https://download.typora.io/linux/typora_1.4.1-dev_amd64.deb' > 
 sudo wget -cO - 'https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb' > google.deb
 sudo wget 'https://download-installer.cdn.mozilla.net/pub/devedition/releases/112.0b9/linux-x86_64/es-ES/firefox-112.0b9.tar.bz2'
 
-sudo apt install libgconf-2-4 libc++1 libappindicator1 -y #dependencias discord
+sudo apt install libgconf-2-4 libc++1 libappindicator1 $forced_flag #dependencias discord
 wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb" > discord.deb
 
 sudo dpkg -i google.deb
@@ -219,7 +219,7 @@ source ~/.bashrc &&
 sudo wget -cO - 'https://downloads.mongodb.com/compass/mongodb-compass_1.36.2_amd64.deb' > compass.deb &&
 sudo dpkg -i compass.deb &&
 
-sudo apt install apache2 -y && sudo apt install php libapache2-mod-php php-mysql $forced_flag && sudo ufw allow 'Apache' && sudo ufw enable && cd /var/www/html/ && sudo rm -r index.html &&
+sudo apt install apache2 $forced_flag && sudo apt install php libapache2-mod-php php-mysql $forced_flag && sudo ufw allow 'Apache' && sudo ufw enable && cd /var/www/html/ && sudo rm -r index.html &&
 
 # Composer instalacion
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
