@@ -135,7 +135,7 @@ done
 
 sudo apt update && sudo apt upgrade $forced_flag
 
-cd Downloads
+cd ~/Downloads
 
 sudo apt-get install curl htop python3-pip git nodejs npm $forced_flag
 sudo add-apt-repository ppa:obsproject/obs-studio $forced_flag
@@ -159,7 +159,7 @@ sudo apt install git gitk $forced_flag
 sudo wget https://github.com/shiftkey/desktop/releases/download/release-2.8.1-linux2/GitHubDesktop-linux-2.8.1-linux2.deb
 sudo dpkg -i GitHubDesktop-linux-2.8.1-linux2.deb
 
-cd ..
+#cd ..
 
 sala="";
 echo "Elija la sala para crear la configuracion de nvm y apache2"
@@ -219,8 +219,10 @@ source ~/.bashrc &&
 sudo wget -cO - 'https://downloads.mongodb.com/compass/mongodb-compass_1.36.2_amd64.deb' > compass.deb &&
 sudo dpkg -i compass.deb &&
 
-sudo apt install apache2 $forced_flag && sudo apt install php libapache2-mod-php php-mysql $forced_flag && sudo ufw allow 'Apache' && sudo ufw enable && cd /var/www/html/ && sudo rm -r index.html &&
+sudo apt install apache2 $forced_flag && sudo apt install php libapache2-mod-php php-mysql $forced_flag && 
+sudo ufw allow 'Apache' && sudo ufw enable && cd /var/www/html/ && sudo rm -r index.html &&
 
+cd ~/Downloads
 # Composer instalacion
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
 php composer-setup.php
