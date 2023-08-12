@@ -1,23 +1,29 @@
 #!/bin/bash
 
-#!/bin/bash
+# Preguntar al usuario si quiere ejecutar en modo forzado
+read -p "Desea aplicar el script en modo forzado? (s/n): " forced
+if [ "$forced" = "s" ]; then
+    forced_flag="-y"
+else
+    forced_flag=""
+fi
 
 read -p "Desea aplicar el uninstaller? (s/n): " aplicar_uninstaller
 
 if [ "$aplicar_uninstaller" = "s" ]; then
 
 	# Desinstalación de paquetes instalados
-	sudo apt remove --purge obs-studio -y
-	sudo apt remove --purge code -y
-	sudo apt remove --purge typora -y
-	sudo apt remove --purge discord -y
-	sudo apt remove --purge github-desktop -y
-	sudo apt remove --purge git gitk -y
-	sudo apt remove --purge nodejs npm -y
-	sudo apt remove --purge apache2 -y
-	sudo apt remove --purge php libapache2-mod-php php-mysql -y
-	sudo apt remove --purge mysql-server -y
-	sudo apt remove --purge mongodb-compass -y
+	sudo apt remove --purge obs-studio $forced_flag
+	sudo apt remove --purge code $forced_flag
+	sudo apt remove --purge typora $forced_flag
+	sudo apt remove --purge discord $forced_flag
+	sudo apt remove --purge github-desktop $forced_flag
+	sudo apt remove --purge git gitk $forced_flag
+	sudo apt remove --purge nodejs npm $forced_flag
+	sudo apt remove --purge apache2 $forced_flag
+	sudo apt remove --purge php libapache2-mod-php php-mysql $forced_flag
+	sudo apt remove --purge mysql-server $forced_flag
+	sudo apt remove --purge mongodb-compass $forced_flag
 
 	# Eliminar archivos descargados
 	rm -f Downloads/google.deb
@@ -84,7 +90,6 @@ else
     echo "Uninstall no aplicado."
 fi
 
-
 echo "Seleccione la sala en la que se van a CREAR los usuarios"
 echo "1. Sputnik"
 echo "2. Apolo"
@@ -135,7 +140,7 @@ cd Downloads
 sudo apt-get install curl htop python3-pip git nodejs npm -y
 sudo add-apt-repository ppa:obsproject/obs-studio -y
 sudo apt update
-sudo apt install obs-studio -y
+sudo apt install obs-studio $forced_flag
 
 sudo wget -cO - 'https://code.visualstudio.com/sha/download?build=stable&os=linux-deb-x64' > visualCode.deb
 sudo wget -cO - 'https://download.typora.io/linux/typora_1.4.1-dev_amd64.deb' > typora.deb
@@ -143,7 +148,6 @@ sudo wget -cO - 'https://dl.google.com/linux/direct/google-chrome-stable_current
 sudo wget 'https://download-installer.cdn.mozilla.net/pub/devedition/releases/112.0b9/linux-x86_64/es-ES/firefox-112.0b9.tar.bz2'
 
 sudo apt install libgconf-2-4 libc++1 libappindicator1 -y #dependencias discord
-#sudo wget -cO - 'https://dl.discordapp.net/apps/linux/0.0.26/discord-0.0.26.deb' > discord.deb
 wget -O discord.deb "https://discordapp.com/api/download?platform=linux&format=deb" > discord.deb
 
 sudo dpkg -i google.deb
@@ -151,7 +155,7 @@ sudo dpkg -i visualCode.deb
 sudo dpkg -i typora.deb
 sudo dpkg -i discord.deb
 
-sudo apt install git gitk -y
+sudo apt install git gitk $forced_flag
 sudo wget https://github.com/shiftkey/desktop/releases/download/release-2.8.1-linux2/GitHubDesktop-linux-2.8.1-linux2.deb
 sudo dpkg -i GitHubDesktop-linux-2.8.1-linux2.deb
 
@@ -215,7 +219,7 @@ source ~/.bashrc &&
 sudo wget -cO - 'https://downloads.mongodb.com/compass/mongodb-compass_1.36.2_amd64.deb' > compass.deb &&
 sudo dpkg -i compass.deb &&
 
-sudo apt install apache2 -y && sudo apt install php libapache2-mod-php php-mysql -y && sudo ufw allow 'Apache' && sudo ufw enable && cd /var/www/html/ && sudo rm -r index.html
+sudo apt install apache2 -y && sudo apt install php libapache2-mod-php php-mysql $forced_flag && sudo ufw allow 'Apache' && sudo ufw enable && cd /var/www/html/ && sudo rm -r index.html &&
 
 # Composer instalacion
 php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
@@ -251,7 +255,7 @@ sudo a2enmod mpm_prefork &&
 sudo a2enmod php8.1 &&
 sudo systemctl restart apache2 &&
 cd &&
-sudo apt install mysql-server -y &&
+sudo apt install mysql-server $forced_flag &&
 sudo touch script.sql &&
 sudo echo -e "CREATE USER 'campus'@'%' IDENTIFIED WITH mysql_native_password BY 'campus2023'; GRANT ALL PRIVILEGES ON *.* TO 'campus'@'%';" | sudo tee script.sql &&
 sudo mysql < script.sql &&
@@ -269,5 +273,4 @@ sudo echo -e "[Desktop Entry]\nName=Firefox Developer\nGenericName=Firefox Devel
 sudo chmod +x ~/.local/share/applications/firefox_dev.desktop &&
 cd &&
 
-sudo apt update && sudo apt upgrade -y
-
+sudo apt update && sudo apt upgrade $forced_flag
