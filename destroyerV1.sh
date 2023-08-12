@@ -10,6 +10,8 @@ fi
 
 read -p "Desea aplicar el uninstaller? (s/n): " aplicar_uninstaller
 
+read -p "Remover usuarios y sus directorios? (s/n): " confirmar
+
 if [ "$aplicar_uninstaller" = "s" ]; then
 
 	# Desinstalación de paquetes instalados
@@ -34,7 +36,7 @@ if [ "$aplicar_uninstaller" = "s" ]; then
 	rm -f Downloads/GitHubDesktop-linux-2.8.1-linux2.deb
 	rm -f Downloads/compass.deb
 
-	read -p "Remover usuarios y sus directorios? (s/n): " confirmar
+
 
 	if [ "$confirmar" = "s" ]; then
 	    # Eliminar directorios y archivos creados
