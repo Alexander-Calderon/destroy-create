@@ -229,6 +229,15 @@ php -r "unlink('composer-setup.php');"
 # Mover Composer al directorio global para que esté disponible en todo el sistema
 sudo mv composer.phar /usr/local/bin/composer
 
+# INSTALAR DOTNET
+wget https://packages.microsoft.com/config/ubuntu/$(lsb_release -rs)/packages-microsoft-prod.deb -O packages-microsoft-prod.deb
+    sudo dpkg -i packages-microsoft-prod.deb
+    sudo apt-get update
+    sudo apt-get install -y apt-transport-https
+    sudo apt-get update
+    sudo apt-get install -y dotnet-sdk-5.0
+    rm packages-microsoft-prod.deb
+
 for usuario in $lista_usuarios_ordenada
 do
   carpeta=$(echo "$usuario" | sed 's/a/A/;s/s/S/;s/m/M/;s/n/N/;s/i/I/;s/u/U/;s/c/C/;s/\(.*\)t/\1T/')
